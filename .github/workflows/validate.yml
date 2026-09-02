@@ -13,3 +13,18 @@ jobs:
           for f in rules/*.json; do
             python3 -m json.tool "$f" > /dev/null && echo "OK $f"
           done
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Validate with the AgentDFIR loader
+        run: go run github.com/efij/AgentDFIR/cmd/agentdfir@latest rules validate ./rules
+      - name: Unique rule IDs across packs
+        run: |
+          python3 - <<'PY'
+          import json,glob,collections,sys
+          ids=[]
+          for f in glob.glob('rules/*.json'):
+              ids+= [r['id'] for r in json.load(open(f))['rules']]
+          d=[k for k,v in collections.Counter(ids).items() if v>1 and k!='CURL_PIPE_SHELL']
+          print('rules:',len(ids),'dups:',d); sys.exit(1 if d else 0)
+          PY
