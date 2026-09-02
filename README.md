@@ -15,8 +15,10 @@ agentdfir triage --rules ./rules <case>.adfir
 | `rules/starter-pack.json` | 4 | Minimal format example — copy this to start an org pack. |
 | `rules/community-pack.json` | 37 | Curated detections: credential access, defense evasion, persistence, container escape, exfil/C2, insecure MCP config. 26 HIGH/CRITICAL, 14 high-confidence. Every rule mapped to MITRE ATT&CK where a valid technique exists, with OWASP LLM / Agentic references. |
 
-The community pack is the canonical copy; the same file ships in the
-[AgentDFIR](https://github.com/efij/AgentDFIR/tree/main/rules) repo and is kept in sync on each release.
+Packs are authored in the [AgentDFIR](https://github.com/efij/AgentDFIR/tree/main/rules) repo (`rules/`).
+This repo mirrors them automatically: `.github/workflows/sync.yml` pulls from AgentDFIR `main`
+every 6 hours (or on manual dispatch), validates with the real loader, and commits only on change.
+Contribute new community rules via PR to AgentDFIR `rules/community-pack.json`.
 
 ## Rule format
 
