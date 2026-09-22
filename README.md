@@ -2,10 +2,19 @@
 
 Community detection rule packs for [AgentDFIR](https://github.com/efij/AgentDFIR) — open-source DFIR for AI agents.
 
-Rules are declarative JSON, shareable independently of the engine (Sigma-style). Load them at triage time:
+Rules are declarative JSON, shareable independently of the engine (Sigma-style).
+
+**Since AgentDFIR v1.6.0 these packs are compiled into the binary and run by
+default** — `agentdfir run` and `agentdfir analyze` use them with no flags.
+Before that they loaded only from `--rules`, which nothing set, so on an
+installed copy they never executed at all.
+
+Use this repo to read the rules, propose changes, or pin a copy:
 
 ```sh
-agentdfir triage --rules ./rules <case>.adfir
+agentdfir analyze --rules ./rules <case>.adfir   # adds these on top of the embedded set
+agentdfir analyze --no-builtin-packs <case>.adfir # built-in Go rules only
+agentdfir rules list                              # everything that will run
 ```
 
 ## Packs
@@ -13,7 +22,7 @@ agentdfir triage --rules ./rules <case>.adfir
 | Pack | Rules | Purpose |
 |---|---|---|
 | `rules/starter-pack.json` | 4 | Minimal format example — copy this to start an org pack. |
-| `rules/community-pack.json` | 37 | Curated detections: credential access, defense evasion, persistence, container escape, exfil/C2, insecure MCP config. 26 HIGH/CRITICAL, 14 high-confidence. Every rule mapped to MITRE ATT&CK where a valid technique exists, with OWASP LLM / Agentic references. |
+| `rules/community-pack.json` | 77 | Curated detections: credential access, defense evasion, persistence, container escape, exfil/C2, insecure MCP config. 26 HIGH/CRITICAL, 14 high-confidence. Every rule mapped to MITRE ATT&CK where a valid technique exists, with OWASP LLM / Agentic references. |
 
 Packs are authored in the [AgentDFIR](https://github.com/efij/AgentDFIR/tree/main/rules) repo (`rules/`).
 This repo mirrors them automatically: `.github/workflows/sync.yml` pulls from AgentDFIR `main`
