@@ -25,6 +25,8 @@ agentdfir rules list                              # everything that will run
 | `rules/community-pack.json` | 77 | Curated detections: credential access, defense evasion, persistence, container escape, exfil/C2, insecure MCP config. 26 HIGH/CRITICAL, 14 high-confidence. Every rule mapped to MITRE ATT&CK where a valid technique exists, with OWASP LLM / Agentic references. |
 
 Packs are authored in the [AgentDFIR](https://github.com/efij/AgentDFIR/tree/main/rules) repo (`rules/`).
+**Send pull requests there, not here** — see [CONTRIBUTING.md](CONTRIBUTING.md). A change merged
+into this repo is overwritten by the next sync and never reaches a released binary.
 This repo mirrors them automatically: `.github/workflows/sync.yml` pulls from AgentDFIR `main`
 every 6 hours (or on manual dispatch), validates with the real loader, and commits only on change.
 Contribute new community rules via PR to AgentDFIR `rules/community-pack.json`.
